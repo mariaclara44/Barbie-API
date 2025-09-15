@@ -49,4 +49,25 @@ const createBarbie = (req, res) => {
     
 }
 
-export { getAllBarbies, getById, createBarbie};
+const barbieDelete = (req, res) => {
+    let id = parseInt(req.params.id);
+  
+    const removerBarbie = barbies.find((b) => b.id === b);
+  
+    if (!removerBarbie) {
+      return res.status(404).json({
+        success: false,
+        message: `Essa barbie não existe ${id}!`,
+      });
+    }
+    const filtroBarbies = barbies.filter((barbie) => barbie.id != id);
+  
+    barbies.splice(0, barbies.length, ...filtroBarbies);
+  
+    res.status(200).json({
+      success: true,
+      message: `Barbie removida com sucesso!`,
+    });
+  };
+  
+  export { getAllBarbies, getById, createBarbie, barbieDelete };
